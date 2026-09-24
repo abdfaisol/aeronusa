@@ -1,0 +1,34 @@
+# =============================================================================
+#  AERONUSA — sewa drone landing page  (PRODUKSI)
+#
+#  Deploy:
+#    docker compose up -d --build     # bangun image & jalankan
+#    docker compose logs -f           # lihat log
+#    docker compose down              # hentikan
+#
+#  Buka http://localhost:5176
+# =============================================================================
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: aeronusa-landing:latest
+    container_name: aeronusa-web
+    restart: unless-stopped
+    ports:
+      - '${APP_PORT:-5176}:80'
+    environment:
+      - TZ=Asia/Jakarta
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1/healthz']
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'

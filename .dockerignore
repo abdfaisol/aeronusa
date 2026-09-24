@@ -1,0 +1,33 @@
+# Jangan kirim ke build context Docker — bikin build lambat & image kotor.
+node_modules
+dist
+dist-ssr
+.vite
+
+# Hasil review / screenshot sementara
+.shots
+
+# Kontrol versi & editor
+.git
+.gitignore
+.github
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Dokumentasi & berkas yang tidak dipakai saat build
+README.md
+image.png
+scripts
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+.dockerignore
+
+# Log & file lokal
+*.log
+npm-debug.log*
+*.local
+.env
+.env.*
