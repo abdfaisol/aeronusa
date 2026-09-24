@@ -35,12 +35,12 @@ Ingin ganti port tanpa menyentuh file? Jalankan dengan `APP_PORT`:
 $env:APP_PORT=8080; docker compose up -d
 ```
 
-| Berkas | Fungsi |
-| --- | --- |
-| `Dockerfile` | Build multi-stage: `node:22-alpine` → `nginx:1.27-alpine` |
-| `docker/nginx.conf` | gzip, cache aset 1 tahun, fallback SPA, header keamanan |
-| `docker-compose.yml` | Satu service `web`, port `5176:80`, healthcheck |
-| `.dockerignore` | Menjaga build context tetap kecil & cepat |
+| Berkas               | Fungsi                                                    |
+| -------------------- | --------------------------------------------------------- |
+| `Dockerfile`         | Build multi-stage: `node:22-alpine` → `nginx:1.27-alpine` |
+| `docker/nginx.conf`  | gzip, cache aset 1 tahun, fallback SPA, header keamanan   |
+| `docker-compose.yml` | Satu service `web`, port `5176:80`, healthcheck           |
+| `.dockerignore`      | Menjaga build context tetap kecil & cepat                 |
 
 Catatan produksi:
 
@@ -100,13 +100,13 @@ Catatan produksi:
 
 ## Kustomisasi cepat
 
-| Ingin mengubah | Edit di |
-| --- | --- |
-| Semua teks, judul, daftar layanan, kontak | `src/data/site.js` |
-| Daftar armada sewa, spesifikasi, dan harga | array `fleet` di `src/data/site.js` |
-| Warna, font, tombol, animasi | `src/index.css` blok `@theme` |
-| Urutan / menambah section | `src/App.jsx` |
-| Foto section (Unsplash) | URL `photo(...)` di `src/data/site.js` |
+| Ingin mengubah                             | Edit di                                |
+| ------------------------------------------ | -------------------------------------- |
+| Semua teks, judul, daftar layanan, kontak  | `src/data/site.js`                     |
+| Daftar armada sewa, spesifikasi, dan harga | array `fleet` di `src/data/site.js`    |
+| Warna, font, tombol, animasi               | `src/index.css` blok `@theme`          |
+| Urutan / menambah section                  | `src/App.jsx`                          |
+| Foto section (Unsplash)                    | URL `photo(...)` di `src/data/site.js` |
 
 ## Section Armada (`#armada`)
 
@@ -200,6 +200,6 @@ ke endpoint Anda (mis. CRM, email gateway, atau Google Sheet).
 - `prefers-reduced-motion` mematikan seluruh animasi.
 - Gambar remote memakai `loading="lazy"` + `decoding="async"`, dengan
   placeholder gradient agar layout tetap rapi saat gambar gagal dimuat.
-#   a e r o n u s a 
- 
- 
+  #   a e r o n u s a 
+   
+   
