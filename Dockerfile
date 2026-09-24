@@ -1,7 +1,7 @@
 # =============================================================================
 #  AERONUSA — landing page sewa drone
-#  Build multi-stage: Node membangun aset statis, Nginx menyajikannya.
-#  Hasil akhir: image kecil (~50 MB) tanpa Node.js di dalamnya.
+#  Build multi-stage: Node membangun aset statis, lalu Node juga yang
+#  menyajikannya lewat server.mjs — tanpa Nginx, tanpa dependency tambahan.
 # =============================================================================
 
 # ------------------------------- Tahap 1: build ------------------------------
@@ -18,17 +18,24 @@ COPY . .
 RUN npm run build
 
 # ------------------------------ Tahap 2: runtime -----------------------------
-FROM nginx:1.27-alpine AS runtime
+FROM node:22-alpine AS runtime
 
-# Konfigurasi server: fallback SPA, gzip, cache, header keamanan.
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+ENV NODE_ENV=production \
+    PORT=5176 \
+    STATIC_DIR=/app/dist
 
-# Hasil build Vite.
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 80
+# Hanya hasil build + server statis. node_modules tidak ikut dibawa.
+COPY --from=build /app/dist ./dist
+COPY server.mjs ./
+
+EXPOSE 5176
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget -qO- http://127.0.0.1/healthz || exit 1
+  CMD wget -qO- http://127.0.0.1:5176/healthz || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+# Tidak berjalan sebagai root.
+USER node
+
+CMD ["node", "server.mjs"]

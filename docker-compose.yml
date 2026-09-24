@@ -17,12 +17,13 @@ services:
     image: aeronusa-landing:latest
     container_name: aeronusa-web
     restart: unless-stopped
+    init: true
     ports:
-      - "${APP_PORT:-5176}:80"
+      - "${APP_PORT:-5176}:5176"
     environment:
       - TZ=Asia/Jakarta
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5176/healthz"]
       interval: 30s
       timeout: 3s
       retries: 3
